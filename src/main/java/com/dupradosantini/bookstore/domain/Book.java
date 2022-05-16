@@ -4,23 +4,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Book {
-
+@Entity
+public class Book implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     private Integer id;
-
     private String title;
     private String author;
     private String text;
-
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Book(Integer id, String title, String author, String text, Category category) {
