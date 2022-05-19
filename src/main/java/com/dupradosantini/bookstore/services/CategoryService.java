@@ -5,6 +5,7 @@ import com.dupradosantini.bookstore.dtos.CategoryDTO;
 import com.dupradosantini.bookstore.repositories.CategoryRepository;
 import com.dupradosantini.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +44,10 @@ public class CategoryService {
 
     public void delete(Integer id) {
         findById(id);
-        categoryRepository.deleteById(id);
+        try{
+            categoryRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new com.dupradosantini.bookstore.services.exceptions.DataIntegrityViolationException("Categoria não pode ser deletada! Possui livros associados");
+        }
     }
 }
