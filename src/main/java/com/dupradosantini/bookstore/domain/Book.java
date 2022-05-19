@@ -1,5 +1,6 @@
 package com.dupradosantini.bookstore.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,8 @@ public class Book implements Serializable {
     private String title;
     private String author;
     private String text;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
