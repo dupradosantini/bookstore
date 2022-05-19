@@ -6,10 +6,11 @@ import com.dupradosantini.bookstore.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.Servlet;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,5 +35,12 @@ public class CategoryController {
         List<Category> list = categoryService.findAll();
         List<CategoryDTO> listDTO = list.stream().map(CategoryDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<Category> createCategory(@RequestBody Category obj){
+        obj = categoryService.create(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).body(obj);
     }
 }
