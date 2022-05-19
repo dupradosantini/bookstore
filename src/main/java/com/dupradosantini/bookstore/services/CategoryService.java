@@ -1,6 +1,7 @@
 package com.dupradosantini.bookstore.services;
 
 import com.dupradosantini.bookstore.domain.Category;
+import com.dupradosantini.bookstore.dtos.CategoryDTO;
 import com.dupradosantini.bookstore.repositories.CategoryRepository;
 import com.dupradosantini.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,13 @@ public class CategoryService {
 
     public Category create(Category obj){
         obj.setId(null);
+        return categoryRepository.save(obj);
+    }
+
+    public Category update(Integer id, CategoryDTO objDto) {
+        Category obj = findById(id);
+        obj.setName(objDto.getName());
+        obj.setDescription(objDto.getDescription());
         return categoryRepository.save(obj);
     }
 }

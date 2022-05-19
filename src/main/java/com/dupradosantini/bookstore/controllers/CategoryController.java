@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.Servlet;
 import java.net.URI;
 import java.util.List;
@@ -42,5 +43,11 @@ public class CategoryController {
         obj = categoryService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO objDto){
+        Category newObj = categoryService.update(id,objDto);
+        return ResponseEntity.ok().body(new CategoryDTO(newObj));
     }
 }
