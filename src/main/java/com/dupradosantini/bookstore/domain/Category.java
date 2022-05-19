@@ -36,8 +36,7 @@ public class Category implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Category)) return false;
-        Category category = (Category) o;
+        if (!(o instanceof Category category)) return false;
         return getId().equals(category.getId());
     }
 
