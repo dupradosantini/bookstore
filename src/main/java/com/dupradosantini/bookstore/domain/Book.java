@@ -19,7 +19,7 @@ public class Book implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
     private String author;
@@ -41,8 +41,7 @@ public class Book implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
+        if (!(o instanceof Book book)) return false;
         return getId().equals(book.getId());
     }
 
