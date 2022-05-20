@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping(value = "/category")
+@RequestMapping(value = "/categoria")
 public class CategoryController {
 
     private final CategoryService categoryService;

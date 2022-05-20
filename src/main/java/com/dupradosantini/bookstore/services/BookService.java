@@ -1,6 +1,7 @@
 package com.dupradosantini.bookstore.services;
 
 import com.dupradosantini.bookstore.domain.Book;
+import com.dupradosantini.bookstore.domain.Category;
 import com.dupradosantini.bookstore.repositories.BookRepository;
 import com.dupradosantini.bookstore.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,17 @@ public class BookService {
         newObj.setAuthor(obj.getAuthor());
         newObj.setTitle(obj.getTitle());
         newObj.setText(obj.getText());
+    }
+
+    public Book create(Integer id_cat, Book obj) {
+        obj.setId(null);
+        Category cat = categoryService.findById(id_cat);
+        obj.setCategory(cat);
+        return bookRepository.save(obj);
+    }
+
+    public void delete(Integer id) {
+        findById(id);
+        bookRepository.deleteById(id);
     }
 }
