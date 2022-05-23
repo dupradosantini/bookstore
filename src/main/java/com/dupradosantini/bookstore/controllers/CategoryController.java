@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.servlet.Servlet;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin("*")
 @Controller
 @RequestMapping(value = "/categoria")
 public class CategoryController {
@@ -39,14 +39,14 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category obj){
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category obj){
         obj = categoryService.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).body(obj);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO objDto){
+    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id,@Valid @RequestBody CategoryDTO objDto){
         Category newObj = categoryService.update(id,objDto);
         return ResponseEntity.ok().body(new CategoryDTO(newObj));
     }

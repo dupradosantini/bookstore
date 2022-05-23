@@ -3,8 +3,10 @@ package com.dupradosantini.bookstore.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,8 +23,15 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty(message = "Campo nome é obrigatório.")
+    @Length(min = 3, max = 100, message = "O campo nome deve ter entre 3 e 100 caracteres.")
     private String name;
+
+    @NotEmpty(message = "Campo descrição é obrigatório.")
+    @Length(min = 3, max = 200, message = "O campo descrição deve ter entre 3 e 200 caracteres.")
     private String description;
+
     @OneToMany(mappedBy = "category")
     private List<Book> books = new ArrayList<>();
 

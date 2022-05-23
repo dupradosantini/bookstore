@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serial;
 import java.io.Serializable;
-import java.lang.reflect.GenericArrayType;
 import java.util.Objects;
 
 @Getter
@@ -21,8 +22,17 @@ public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotEmpty(message = "Campo título é obrigatório.")
+    @Length(min = 3, max = 50, message = "O campo título deve ter entre 3 e 50 caracteres.")
     private String title;
+
+    @NotEmpty(message = "Campo autor é obrigatório.")
+    @Length(min = 3, max = 80, message = "O campo autor deve ter entre 3 e 80 caracteres.")
     private String author;
+
+    @NotEmpty(message = "Campo descrição é obrigatório.")
+    @Length(min = 3, max = 2000000, message = "O campo descrição deve ter entre 3 e 2.000.000 caracteres.")
     private String text;
 
     @JsonIgnore
